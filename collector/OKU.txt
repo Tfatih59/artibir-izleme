@@ -1,0 +1,36 @@
+GOP OPC-DA Okuyucu v0.3
+=======================
+
+Bu klasorun tamamini santral PC'sine kopyala.
+Icerik birlikte kalmali: GopOpcOkuyucu.exe, taglar.txt, calistir.bat, calistir-surekli.bat, OKU.txt.
+
+ONCEKI SURUMLE KARIŞTIRMA
+- Eski GopOpcOkuyucu klasoru veya gop-opc-src-v02 ile karistirma.
+- Bu v0.3 paketidir; taglar.txt zorunlu (yaklasik 1000 dogrulanmis Vestas VOB etiketi).
+
+TE SEFERLIK OKUMA
+1. Klasoru oldugu gibi kopyala (ornegin masaustu).
+2. calistir.bat dosyasina cift tikla.
+3. Bitince ayni klasorde okuma-sonucu.json olusur.
+
+SUREKLI OKUMA (toplayici ilk adim)
+1. calistir-surekli.bat dosyasina cift tikla.
+2. Her 10 saniyede bir okur; okuma-sonucu.json uzerine yazar.
+3. Konsolda dongu no, Good adedi, POM ActivePower ve Grid.Power toplami gorunur.
+4. Durdurmak icin Ctrl+C.
+
+ISTEGE BAGLI HTTPS POST
+- Varsayilan: aga HICBIR sey gonderilmez (salt yerel okuma).
+- Merkez hazir olunca (anahtar Azure'daki Ingest__Keys__gop degeridir):
+    GopOpcOkuyucu.exe --tags taglar.txt --interval 10 --post "https://HOST/api/ingest?key=ANAHTAR"
+- Exe ozel HTTP basligi koyamaz; anahtar URL'dedir. Ayrinti: POST.md
+- --post verilmeden POST yapilmaz.
+- Santral PC'sinde internet varsa baglanti santralden disari dogru olur; zenon'a disaridan port acilmaz.
+- Ayni JSON tekrar giderse merkez 200 duplicate doner; okuma bozulmaz.
+
+NOTLAR
+- Salt okunur; setpoint / yazma yok.
+- 32-bit (x86). Vestas.VOBOPCServerDA.3 + IOPCItemIO yolu kanitlandi.
+- Etiketler taglar.txt icinde (UTF-8, satir basina bir ItemID, # yorum).
+- Komut satirina yuzlerce --read koyma; bat satiri kirilir. taglar.txt kullan.
+- GopOpcOkuyucu.exe tek basina cift tiklanirsa pencere hemen kapanabilir; bat kullan.

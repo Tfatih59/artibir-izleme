@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1220">
+  <title>Artıbir Enerji · İşletme İzleme</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<section id="login" class="login-screen">
+  <div class="login-story">
+    <div class="brand">
+      <span class="brand-logo"><img src="/assets/artibir-logo.jpeg" alt="Artıbir Enerji A.Ş. logosu"></span>
+      <div><span class="brand-company">ARTIBİR ENERJİ</span>İŞLETME YÖNETİM SİSTEMİ<small>3 RES · 1 GES · Gaziosmanpaşa RES dahil</small></div>
+    </div>
+    <div class="story-copy">
+      <span class="eyebrow">SAHADAN KARARA, TEK EKRANDA</span>
+      <h1>Rüzgârın gücü.<br>Operasyonun kontrolü.</h1>
+      <p>Üretimden vardiya devrine, santralin bütün hikâyesi bir arada.</p>
+      <div class="wind-art" aria-hidden="true"><span class="turbine t1">✳</span><span class="turbine t2">✳</span><span class="turbine t3">✳</span></div>
+    </div>
+    <small class="story-bottom">Gaziosmanpaşa · Yılmaz · Yeniköy RES · Küçükköy GES</small>
+  </div>
+  <div class="login-panel">
+    <div class="login-box">
+      <span class="test-badge">İZLEME</span>
+      <h2>Operasyon merkezine hoş geldin</h2>
+      <p class="muted" id="login-lead">Kurumsal hesabınla giriş yap.</p>
+      <p class="small muted" style="margin:4px 0 0">Artıbir Enerji A.Ş.</p>
+      <div class="demo-note" id="login-note">Salt okunur izleme. Uzaktan kumanda, setpoint veya türbin start/stop yoktur.</div>
+      <div id="dev-form">
+        <label for="demo-name">Kullanıcı adı</label>
+        <input id="demo-name" placeholder="Örn. deniz" maxlength="40" autocomplete="username">
+        <label for="demo-pass" style="margin-top:12px">Parola</label>
+        <input id="demo-pass" type="password" maxlength="80" autocomplete="current-password">
+        <p id="login-error" class="small danger" role="alert" style="min-height:16px;margin:6px 0 0"></p>
+        <button class="primary login-button" id="enter-demo" type="button">Giriş yap <span>→</span></button>
+      </div>
+      <a class="primary login-button hidden" id="entra-login" href="/api/auth/signin?returnUrl=/">Microsoft ile giriş yap <span>→</span></a>
+      <p class="small muted" id="login-hint"></p>
+    </div>
+    <small class="login-foot">Artıbir Enerji · santral izleme · v1</small>
+  </div>
+</section>
+<div id="app" class="app hidden">
+  <aside id="sidebar">
+    <div class="brand">
+      <span class="brand-icon"><img src="/assets/artibir-logo.jpeg" alt="Artıbir Enerji" style="width:100%;height:100%;object-fit:cover;object-position:8% 22%"></span>
+      <div><span class="brand-company">ARTIBİR ENERJİ</span><div id="side-brand">İŞLETME<br>YÖNETİM<small>Salt okunur izleme</small></div></div>
+    </div>
+    <nav id="nav" aria-label="Ana menü"></nav>
+    <div class="sidebar-bottom"><span class="dot"></span> Salt okunur · kumanda yok</div>
+  </aside>
+  <button id="scrim" class="scrim hidden" type="button" aria-label="Menüyü kapat"></button>
+  <div class="workspace">
+    <header>
+      <button class="icon-button menu-toggle" id="menu-toggle" type="button" aria-label="Menüyü aç">☰</button>
+      <div class="breadcrumb"><span id="crumb-prefix"></span><strong id="breadcrumb">Genel Bakış</strong></div>
+      <div class="top-actions">
+        <span class="role-label pill" id="role-label"></span>
+        <span class="simulation" id="live-pill"><i class="dot"></i> Bağlantı bekleniyor</span>
+        <button class="avatar" id="user-button" type="button" title="Oturumu kapat">?</button>
+      </div>
+    </header>
+    <main id="main" tabindex="-1"></main>
+    <footer>
+      <span><span id="foot-plant">Artıbir Enerji</span> <span class="muted">/ Operasyon paneli · salt okunur izleme</span></span>
+      <span id="foot-meta">Uzaktan start/stop ve setpoint yoktur</span>
+    </footer>
+  </div>
+</div>
+<div id="modal-root"></div>
+<div id="toast" role="status" class="toast hidden"></div>
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+name: Azure App Service
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Test
+        run: dotnet test src/Artibir.Izleme.Tests/Artibir.Izleme.Tests.csproj -c Release
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Publish
+        run: dotnet publish src/Artibir.Izleme/Artibir.Izleme.csproj -c Release -o ${{ github.workspace }}/publish
+      # Yayın profili (Deployment Center varsayılanı).
+      # Gerekli GitHub Actions sırları, değerleri bu dosyada YOKTUR:
+      #   AZURE_WEBAPP_NAME
+      #   AZURE_WEBAPP_PUBLISH_PROFILE
+      #
+      # OIDC alternatifi (sırlar yine boş bırakılır, burada doldurulmaz):
+      #   AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID, AZURE_WEBAPP_NAME
+      # Adımlar: azure/login@v2 (client-id / tenant-id / subscription-id)
+      # sonra azure/webapps-deploy@v3 (app-name, package). publish-profile satırı kalkar.
+      - name: Deploy
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ${{ github.workspace }}/publish
